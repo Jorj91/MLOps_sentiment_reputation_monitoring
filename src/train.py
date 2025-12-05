@@ -25,7 +25,7 @@ def train_model():
 
     print("Step 3: Tokenizing dataset...")
     def tokenize(batch):
-        return tokenizer(batch["text"], truncation=True, padding="max_length", max_length=64)
+        return tokenizer(batch["text"], truncation=True, padding="max_length", max_length=32)
         
     train_data = train_data.map(tokenize, batched=True)
     val_data = val_data.map(tokenize, batched=True)
@@ -33,8 +33,8 @@ def train_model():
     train_data.set_format(type="torch", columns=["input_ids", "attention_mask", "label"])
     val_data.set_format(type="torch", columns=["input_ids", "attention_mask", "label"])
 
-    train_loader = DataLoader(train_data, batch_size=8, shuffle=True)
-    val_loader = DataLoader(val_data, batch_size=8)
+    train_loader = DataLoader(train_data, batch_size=4, shuffle=True)
+    val_loader = DataLoader(val_data, batch_size=4)
 
     optimizer = AdamW(model.parameters(), lr=5e-5)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

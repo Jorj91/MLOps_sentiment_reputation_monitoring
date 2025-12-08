@@ -35,13 +35,9 @@ jobs:
       - name: Create tiny model for CI
         run: python scripts/create_tiny_model.py
 
-
-      # 6 Upload local_model as artifact
-      - name: Upload local_model as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: local_model
-          path: local_model/
+      # 6 Tell tests to use the tiny model
+      - name: Set MODEL_PATH for CI
+        run: echo "MODEL_PATH=/tmp/local_model" >> $GITHUB_ENV
 
       # 7 Run tests
       - name: Run tests

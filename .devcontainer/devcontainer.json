@@ -1,10 +1,11 @@
 {
   "name": "mlops-sentiment-dev",
   "image": "mcr.microsoft.com/devcontainers/python:3.10",
-  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
   "workspaceFolder": "/workspace",
   "forwardPorts": [8000],
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
-  }
+  },
+  // Automatically run setup script after container starts
+  "postStartCommand": "bash /workspace/.devcontainer/setup_packages.sh"
 }

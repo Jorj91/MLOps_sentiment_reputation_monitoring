@@ -11,34 +11,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1 Checkout repository
+      # Checkout repository
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # 2 Set up Python
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      # 3 Install dependencies
+      # Install dependencies
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 4 Make src available as module
+      # Make src available as module
       - name: Make src available as module
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
-      # 5 Create tiny model for CI
+      # Create tiny model for CI
       - name: Create tiny model for CI
         run: python scripts/create_tiny_model.py
 
-      # 6 Tell tests to use the tiny model
+      # Tell tests to use the tiny model
       - name: Set MODEL_PATH for CI
         run: echo "MODEL_PATH=/tmp/local_model" >> $GITHUB_ENV
 
-      # 7 Run tests
+      # Run tests
       - name: Run tests
-        run: pytest -v
+        run: |
+          PYTHONPATH=$(pwd) pytest -v
+
+      # inference examples
+      - name: Quick inference test on multiple examples
+        run: |
+          python - <<EOF
+          import json
+          from src.sentiment import predict_sentiment
+
+          examples = [
+              "I love AI!",
+              "This product is terrible.",
+              "Could be better.",
+              "I'm not sure how I feel about this.",
+              "Best purchase ever!"
+          ]
+
+          results = {text: predict_sentiment(text) for text in examples}
+
+          with open("results.json", "w") as f:
+              json.dump(results, f, indent=2)
+
+          print("Saved results.json with predictions")
+          EOF

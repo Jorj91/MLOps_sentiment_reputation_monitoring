@@ -1,11 +1,11 @@
 {
   "name": "mlops-sentiment-dev",
   "image": "mcr.microsoft.com/devcontainers/python:3.10",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspaces/MLOps_sentiment_reputation_monitoring",
   "forwardPorts": [8000],
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
   // Automatically run setup script after container starts
-  "postStartCommand": "bash /workspace/.devcontainer/setup_packages.sh"
+  "postStartCommand": "bash /workspace/MLOps_sentiment_reputation_monitoring/.devcontainer/setup_packages.sh"
 }

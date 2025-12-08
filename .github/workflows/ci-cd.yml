@@ -69,14 +69,14 @@ jobs:
 
       # Save tiny model as artifact
       - name: Upload tiny model artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tiny-model
           path: /tmp/local_model
 
       # Upload inference results
       - name: Upload inference results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: inference-results
           path: results.json

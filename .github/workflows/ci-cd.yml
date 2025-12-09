@@ -90,7 +90,12 @@ jobs:
       - name: Run Docker container
         run: |
           docker run -d -p 8000:8000 --name sentiment-api mlops-sentiment-api:ci
-          sleep 10
+          sleep 50
+
+      # show container logs for debugging
+      - name: Show container logs
+        run: docker logs sentiment-api || true
+
 
 
       # Test API with curl

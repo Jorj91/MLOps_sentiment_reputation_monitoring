@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from .sentiment import predict_sentiment
+from src.sentiment import predict_sentiment
 
 app = FastAPI(title="Sentiment Monitoring API")
 

@@ -98,6 +98,23 @@ jobs:
       - name: Show container logs
         run: docker logs sentiment-api || true
 
+      # Call /predict to generate real monitoring data
+      - name: Call /predict endpoint to generate stats
+        run: |
+          curl -X POST "http://localhost:8000/predict" \
+          -H "Content-Type: application/json" \
+          -d '{"text":"I love this CI pipeline!"}'
+
+          curl -X POST "http://localhost:8000/predict" \
+          -H "Content-Type: application/json" \
+          -d '{"text":"This is terrible."}'
+
+          curl -X POST "http://localhost:8000/predict" \
+          -H "Content-Type: application/json" \
+          -d '{"text":"It is okay."}'
+    
+
+
       # Save /stats endpoint output to JSON
       - name: Save /stats to JSON
         run: |

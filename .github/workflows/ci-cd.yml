@@ -89,8 +89,10 @@ jobs:
       # Run container in background
       - name: Run Docker container
         run: |
-          docker run -d -p 8000:8000 --name sentiment-api mlops-sentiment-api:ci
-          sleep 50
+          docker run -d -p 8000:8000 \
+          -e USE_FAKE_MODEL=true \
+          --name sentiment-api mlops-sentiment-api:ci
+          sleep 40
 
       # show container logs for debugging
       - name: Show container logs

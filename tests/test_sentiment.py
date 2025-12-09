@@ -1,7 +1,9 @@
 
-
+from fastapi.testclient import TestClient
+from src.app import app
 from src.sentiment import predict_sentiment
-import requests
+
+# unit tests on the model
 
 # single sentence test
 def test_sentiment_single():
@@ -34,14 +36,17 @@ def test_sentiment_multiple():
         assert "probabilities" in result
         assert result["sentiment"] in ["positive", "neutral", "negative"]
 
+# API test for /stats
 
-BASE_URL = "http://localhost:8000"
+client = TestClient(app)
 
 def test_stats_endpoint():
-    resp = requests.get(f"{BASE_URL}/stats")
+    resp = client.get("/stats")
     assert resp.status_code == 200
     data = resp.json()
+
     assert "total_requests" in data
     assert "prediction_counts" in data
+
     for label in ["negative", "neutral", "positive"]:
         assert label in data["prediction_counts"]

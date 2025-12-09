@@ -107,6 +107,12 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"text":"I love this project!"}'
 
+
+      # Test /stats endpoint
+      - name: Test /stats endpoint
+        run: |
+          curl -X GET "http://localhost:8000/stats"
+
       # Stop and remove container
       - name: Cleanup Docker
         run: |
